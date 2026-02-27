@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>杜精骗到 - AI 驱动的诈骗思维训练平台</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #0f1535;
+            --bg-tertiary: #151d3b;
+            --accent: #d4a574;
+            --accent-light: #e8c9a0;
+            --accent-dark: #b8885f;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b8d4;
+            --border: #2a3555;
+            --border-light: #3a4570;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-brand-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-primary);
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent);
+        }
+
+        .nav-link-icon {
+            margin-right: 0.5rem;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-login,
+        .btn-signup {
+            padding: 0.6rem 1.5rem;
+            border-radius: 24px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-login {
+            background-color: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-login:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-signup {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .btn-signup:hover {
+            background-color: var(--accent-light);
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* 首页 Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 4rem;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.05) 0%, rgba(10, 14, 39, 0) 100%);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--accent);
+            border-radius: 24px;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(212, 165, 116, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* 统计数据 */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* 功能页面 */
+        .page {
+            display: none;
+            padding-top: 6rem;
+            min-height: 100vh;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .page-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(212, 165, 116, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-description {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* 聊天容器 */
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            display: flex;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            word-wrap: break-word;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .message.user .message-content {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+            border-radius: 12px 4px 12px 12px;
+        }
+
+        .message.assistant .message-content {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            border-radius: 4px 12px 12px 12px;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .chat-input-area {
+            border-top: 1px solid var(--border);
+            padding: 1rem;
+            background-color: rgba(15, 21, 53, 0.5);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            resize: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .chat-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .btn-send {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent);
+            border: none;
+            border-radius: 8px;
+            color: var(--bg-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-send:hover:not(:disabled) {
+            background-color: var(--accent-light);
+            transform: scale(1.05);
+        }
+
+        .btn-send:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* 加载动画 */
+        .loading {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite;
+        }
+
+        .loading-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            40% {
+                transform: translateY(-10px);
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .page-title {
+                font-size: 1.8rem;
+            }
+
+            .chat-container {
+                height: 500px;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-brand" onclick="showPage('home'); return false;">
+                <div class="nav-brand-icon">🛡️</div>
+                <span>杜精骗到</span>
+            </a>
+            <ul class="nav-links">
+                <li><a class="nav-link active" onclick="showPage('home'); return false;">首页</a></li>
+                <li><a class="nav-link" onclick="showPage('fraudAlert'); return false;">防诈提醒</a></li>
+                <li><a class="nav-link" onclick="showPage('scamEncyclopedia'); return false;">骗局百科</a></li>
+                <li><a class="nav-link" onclick="showPage('streetScams'); return false;">街头骗局</a></li>
+                <li><a class="nav-link" onclick="showPage('telecomFraud'); return false;">电信诈骗</a></li>
+                <li><a class="nav-link" onclick="showPage('scamReplay'); return false;">模拟骗局复盘</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn-login" onclick="alert('登录功能演示')">登录</button>
+                <button class="btn-signup" onclick="alert('注册功能演示')">注册</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首页 -->
+    <div id="home" class="page active">
+        <div class="hero">
+            <div class="hero-badge">✨ AI 驱动的诈骗思维训练平台</div>
+            <h1 class="hero-title">杜精骗到</h1>
+            <h2 class="hero-subtitle">谍锋大师</h2>
+            <p class="hero-description">
+                用 AI 的力量，磨你的诈骗思维。与社精对话、诊断诈骗漏洞、识破诈骗陷阱——
+                在辩论的世界里，成为那个永远无懈可击的人。
+            </p>
+            <div class="hero-cta">
+                <button class="btn-primary" onclick="showPage('fraudAlert')">开始拆杜 →</button>
+                <button class="btn-secondary" onclick="showPage('scamReplay')">诊断谍锋 →</button>
+            </div>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">30+</div>
+                    <div class="stat-label">诈骗类型</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">AI</div>
+                    <div class="stat-label">智能驱动</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">对话轮次</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">诈骗广覆</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 防诈提醒页面 -->
+    <div id="fraudAlert" class="page">
+        <div class="container">
+            <div class="page-header">
+                <div class="page-icon">⚠️</div>
+                <div>
+                    <h1 class="page-title">防诈提醒</h1>
+                    <p class="page-description">输入您遇到的可疑情况，AI 帮您识别诈骗风险</p>
+                </div>
+            </div>
+            <div class="chat-container">
+                <div class="chat-messages" id="fraudAlertMessages">
+                    <div class="message assistant">
+                        <div>
+                            <div class="message-content">欢迎来到防诈提醒室。请描述你遇到的可疑情况，我会帮你识别潜在的诈骗风险和防范方法。</div>
+                            <div class="message-time">09:00</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" id="fraudAlertInput" placeholder="描述你遇到的可疑情况..." onkeypress="handleKeyPress(event, 'fraudAlert')">
+                    <button class="btn-send" onclick="sendMessage('fraudAlert')">→</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 骗局百科页面 -->
+    <div id="scamEncyclopedia" class="page">
+        <div class="container">
+            <div class="page-header">
+                <div class="page-icon">📚</div>
+                <div>
+                    <h1 class="page-title">骗局百科</h1>
+                    <p class="page-description">查询各类诈骗信息，AI 提供详细解答</p>
+                </div>
+            </div>
+            <div class="chat-container">
+                <div class="chat-messages" id="scamEncyclopediaMessages">
+                    <div class="message assistant">
+                        <div>
+                            <div class="message-content">欢迎来到骗局百科。你可以查询任何诈骗类型的信息，我会为你提供详细的解析和防范建议。</div>
+                            <div class="message-time">09:00</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" id="scamEncyclopediaInput" placeholder="查询诈骗类型..." onkeypress="handleKeyPress(event, 'scamEncyclopedia')">
+                    <button class="btn-send" onclick="sendMessage('scamEncyclopedia')">→</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 街头骗局页面 -->
+    <div id="streetScams" class="page">
+        <div class="container">
+            <div class="page-header">
+                <div class="page-icon">🚶</div>
+                <div>
+                    <h1 class="page-title">街头骗局</h1>
+                    <p class="page-description">展示常见街头诈骗手法，AI 根据提问提供案例分析</p>
+                </div>
+            </div>
+            <div class="chat-container">
+                <div class="chat-messages" id="streetScamsMessages">
+                    <div class="message assistant">
+                        <div>
+                            <div class="message-content">欢迎来到街头骗局分析室。请描述你想了解的街头诈骗类型，我会为你提供真实案例和防范建议。</div>
+                            <div class="message-time">09:00</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" id="streetScamsInput" placeholder="了解街头骗局手法..." onkeypress="handleKeyPress(event, 'streetScams')">
+                    <button class="btn-send" onclick="sendMessage('streetScams')">→</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 电信诈骗页面 -->
+    <div id="telecomFraud" class="page">
+        <div class="container">
+            <div class="page-header">
+                <div class="page-icon">📱</div>
+                <div>
+                    <h1 class="page-title">电信诈骗</h1>
+                    <p class="page-description">介绍电信诈骗类型，AI 实时回答用户疑问</p>
+                </div>
+            </div>
+            <div class="chat-container">
+                <div class="chat-messages" id="telecomFraudMessages">
+                    <div class="message assistant">
+                        <div>
+                            <div class="message-content">欢迎来到电信诈骗防范室。请提出你关于电信诈骗的任何问题，我会为你详细解答各类电信诈骗手法和防范方法。</div>
+                            <div class="message-time">09:00</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" id="telecomFraudInput" placeholder="咨询电信诈骗防范..." onkeypress="handleKeyPress(event, 'telecomFraud')">
+                    <button class="btn-send" onclick="sendMessage('telecomFraud')">→</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模拟骗局复盘页面 -->
+    <div id="scamReplay" class="page">
+        <div class="container">
+            <div class="page-header">
+                <div class="page-icon">🔄</div>
+                <div>
+                    <h1 class="page-title">模拟骗局复盘</h1>
+                    <p class="page-description">分析遭遇情景，深入理解骗局套路和防范方法</p>
+                </div>
+            </div>
+            <div class="chat-container">
+                <div class="chat-messages" id="scamReplayMessages">
+                    <div class="message assistant">
+                        <div>
+                            <div class="message-content">欢迎来到模拟骗局复盘室。请描述你遭遇或想象的诈骗情景，我会帮你深入分析骗局套路、识别漏洞和防范方法。</div>
+                            <div class="message-time">09:00</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" id="scamReplayInput" placeholder="描述你遭遇的诈骗情景..." onkeypress="handleKeyPress(event, 'scamReplay')">
+                    <button class="btn-send" onclick="sendMessage('scamReplay')">→</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 模拟 AI 回复
+        const mockResponses = {
+            fraudAlert: [
+                "这听起来像是一个典型的诈骗迹象。让我为你分析一下：",
+                "根据你描述的情况，我建议立即采取以下防范措施：",
+                "这种诈骗手法很常见。关键是要识别以下红旗信号：",
+                "你的警觉性很高。让我为你详细解释这个诈骗的运作方式："
+            ],
+            scamEncyclopedia: [
+                "这是一种常见的诈骗类型。让我为你详细介绍：",
+                "这个骗局的特点是：1) 建立信任 2) 制造紧迫感 3) 获取金钱或信息",
+                "防范这类诈骗的关键是：保持警惕，验证信息来源，不要急于做决定",
+                "历史上有很多这类诈骗案例。最著名的包括："
+            ],
+            streetScams: [
+                "街头诈骗通常涉及面对面的互动。常见手法包括：",
+                "这种街头骗局的套路是：接近目标 → 建立信任 → 实施诈骗",
+                "防范街头诈骗的最好方法是保持警惕，不要与陌生人进行金钱交易",
+                "我见过很多这样的案例。让我为你分析这个具体情景："
+            ],
+            telecomFraud: [
+                "电信诈骗是最常见的诈骗类型之一。主要形式包括：",
+                "这类诈骗通常通过电话、短信或网络进行。关键特征是：",
+                "防范电信诈骗的建议：1) 不要透露个人信息 2) 验证来电者身份 3) 联系官方渠道确认",
+                "运营商和银行永远不会通过电话要求你提供密码或验证码"
+            ],
+            scamReplay: [
+                "让我为你深入分析这个骗局的每一步：",
+                "这个情景中的关键漏洞是：",
+                "如果你再次遇到类似情况，这是你应该做的：",
+                "这个骗局之所以有效，是因为它利用了人类的这些心理弱点："
+            ]
+        };
+
+        function showPage(pageId) {
+            // 隐藏所有页面
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // 显示选中的页面
+            const selectedPage = document.getElementById(pageId);
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+            }
+
+            // 更新导航链接状态
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // 滚动到顶部
+            window.scrollTo(0, 0);
+        }
+
+        function handleKeyPress(event, pageId) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage(pageId);
+            }
+        }
+
+        function sendMessage(pageId) {
+            const inputId = pageId + 'Input';
+            const messagesId = pageId + 'Messages';
+            const input = document.getElementById(inputId);
+            const messagesContainer = document.getElementById(messagesId);
+
+            const userMessage = input.value.trim();
+            if (!userMessage) return;
+
+            // 添加用户消息
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'message user';
+            userMessageDiv.innerHTML = `
+                <div>
+                    <div class="message-content">${escapeHtml(userMessage)}</div>
+                    <div class="message-time">${getCurrentTime()}</div>
+                </div>
+            `;
+            messagesContainer.appendChild(userMessageDiv);
+
+            // 清空输入框
+            input.value = '';
+
+            // 显示加载动画
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message assistant';
+            loadingDiv.innerHTML = `
+                <div>
+                    <div class="message-content">
+                        <div class="loading">
+                            <div class="loading-dot"></div>
+                            <div class="loading-dot"></div>
+                            <div class="loading-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            messagesContainer.appendChild(loadingDiv);
+
+            // 滚动到底部
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // 模拟 AI 回复延迟
+            setTimeout(() => {
+                loadingDiv.remove();
+
+                const responses = mockResponses[pageId] || mockResponses.fraudAlert;
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+
+                const aiMessageDiv = document.createElement('div');
+                aiMessageDiv.className = 'message assistant';
+                aiMessageDiv.innerHTML = `
+                    <div>
+                        <div class="message-content">${randomResponse}</div>
+                        <div class="message-time">${getCurrentTime()}</div>
+                    </div>
+                `;
+                messagesContainer.appendChild(aiMessageDiv);
+
+                // 滚动到底部
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 1500);
+        }
+
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
