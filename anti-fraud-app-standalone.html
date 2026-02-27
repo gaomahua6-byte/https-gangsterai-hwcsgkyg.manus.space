@@ -522,17 +522,17 @@
     <!-- 导航栏 -->
     <nav>
         <div class="nav-container">
-            <a href="#" class="nav-brand" onclick="showPage('home'); return false;">
+            <a href="#" class="nav-brand" onclick="showPage(event,'home'); return false;">
                 <div class="nav-brand-icon">🛡️</div>
                 <span>杜精骗到</span>
             </a>
             <ul class="nav-links">
-                <li><a class="nav-link active" onclick="showPage('home'); return false;">首页</a></li>
-                <li><a class="nav-link" onclick="showPage('fraudAlert'); return false;">防诈提醒</a></li>
+                <li><a class="nav-link active" onclick="showPage(event,'home'); return false;">首页</a></li>
+                <li><a class="nav-link" onclick="showPage(event,'fraudAlert'); return false;">防诈提醒</a></li>
                 <li><a class="nav-link" onclick="showPage('scamEncyclopedia'); return false;">骗局百科</a></li>
-                <li><a class="nav-link" onclick="showPage('streetScams'); return false;">街头骗局</a></li>
-                <li><a class="nav-link" onclick="showPage('telecomFraud'); return false;">电信诈骗</a></li>
-                <li><a class="nav-link" onclick="showPage('scamReplay'); return false;">模拟骗局复盘</a></li>
+                <li><a class="nav-link" onclick="showPage(event,'streetScams'); return false;">街头骗局</a></li>
+                <li><a class="nav-link" onclick="showPage(event,'telecomFraud'); return false;">电信诈骗</a></li>
+                <li><a class="nav-link" onclick="showPage(event,'scamReplay'); return false;">模拟骗局复盘</a></li>
             </ul>
             <div class="nav-actions">
                 <button class="btn-login" onclick="alert('登录功能演示')">登录</button>
@@ -552,8 +552,8 @@
                 在辩论的世界里，成为那个永远无懈可击的人。
             </p>
             <div class="hero-cta">
-                <button class="btn-primary" onclick="showPage('fraudAlert')">开始拆杜 →</button>
-                <button class="btn-secondary" onclick="showPage('scamReplay')">诊断谍锋 →</button>
+                <button class="btn-primary" onclick="showPage(event,'fraudAlert')">开始拆杜 →</button>
+                <button class="btn-secondary" onclick="showPage(event,'scamReplay')">诊断谍锋 →</button>
             </div>
             <div class="stats">
                 <div class="stat-item">
@@ -746,7 +746,7 @@
             ]
         };
 
-        function showPage(pageId) {
+        showPage(event,'scamReplay')
             // 隐藏所有页面
             const pages = document.querySelectorAll('.page');
             pages.forEach(page => page.classList.remove('active'));
