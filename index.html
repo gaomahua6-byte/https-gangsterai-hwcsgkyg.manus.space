@@ -1,24 +1,45 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>杜精骗到</title>
 
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>防诈骗智能助手</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
-  </head>
+<style>
+.page{display:none;}
+.page.active{display:block;}
+</style>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    <script
-      defer
-      src="%VITE_ANALYTICS_ENDPOINT%/umami"
-      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
-  </body>
+</head>
 
+<body>
+
+<a href="#" onclick="showPage(event,'home')">首页</a>
+<a href="#" onclick="showPage(event,'fraudAlert')">防诈提醒</a>
+
+<div id="home" class="page active">
+<h1>首页正常显示 ✅</h1>
+</div>
+
+<div id="fraudAlert" class="page">
+<h1>防诈提醒页面 ✅</h1>
+</div>
+
+<script>
+
+function showPage(e,pageId){
+
+e.preventDefault();
+
+document.querySelectorAll('.page').forEach(p=>{
+p.classList.remove('active');
+});
+
+document.getElementById(pageId).classList.add('active');
+
+}
+
+</script>
+
+</body>
 </html>
